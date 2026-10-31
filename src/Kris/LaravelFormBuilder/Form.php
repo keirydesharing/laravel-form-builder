@@ -446,7 +446,7 @@ class Form
      */
     public function getFormOption($option, $default = null)
     {
-        return array_get($this->formOptions, $option, $default);
+        return Arr::get($this->formOptions, $option, $default);
     }
 
     /**
@@ -492,8 +492,8 @@ class Form
      */
     protected function pullFromOptions($name, $method)
     {
-        if (array_get($this->formOptions, $name) !== null) {
-            $this->{$method}(array_pull($this->formOptions, $name));
+        if (Arr::get($this->formOptions, $name) !== null) {
+            $this->{$method}(Arr::pull($this->formOptions, $name));
         }
     }
 
@@ -751,7 +751,7 @@ class Form
             return $this->data;
         }
 
-        return array_get($this->data, $name, $default);
+        return Arr::get($this->data, $name, $default);
     }
 
     /**
@@ -929,7 +929,7 @@ class Form
     protected function checkIfNamedForm()
     {
         if ($this->getFormOption('name')) {
-            $this->name = array_pull($this->formOptions, 'name', $this->name);
+            $this->name = Arr::pull($this->formOptions, 'name', $this->name);
         }
     }
 
@@ -959,9 +959,9 @@ class Form
         $dotName = $this->formHelper->transformToDotSyntax($this->getName());
         $model = $this->formHelper->convertModelToArray($this->getModel());
 
-        if (!array_get($model, $dotName)) {
+        if (!Arr::get($model, $dotName)) {
             $newModel = [];
-            array_set($newModel, $dotName, $model);
+            Arr::set($newModel, $dotName, $model);
             $this->model = $newModel;
 
             return true;

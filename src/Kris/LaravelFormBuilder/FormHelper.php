@@ -104,7 +104,7 @@ class FormHelper
      */
     public function getConfig($key, $default = null)
     {
-        return array_get($this->config, $key, $default);
+        return Arr::get($this->config, $key, $default);
     }
 
     /**

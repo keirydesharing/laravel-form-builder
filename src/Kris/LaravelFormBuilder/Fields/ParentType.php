@@ -1,6 +1,7 @@
 <?php  namespace Kris\LaravelFormBuilder\Fields;
 
 use Kris\LaravelFormBuilder\Form;
+use Illuminate\Support\Arr;
 
 abstract class ParentType extends FormField
 {
@@ -77,7 +78,7 @@ abstract class ParentType extends FormField
      */
     public function getChild($key)
     {
-        return array_get($this->children, $key);
+        return Arr::get($this->children, $key);
     }
 
     /**

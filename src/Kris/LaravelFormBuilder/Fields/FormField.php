@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Kris\LaravelFormBuilder\FormHelper;
 use Kris\LaravelFormBuilder\RulesParser;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * Class FormField
@@ -201,7 +203,7 @@ abstract class FormField
         } elseif (is_object($model)) {
             return object_get($model, $transformedName);
         } elseif (is_array($model)) {
-            return array_get($model, $transformedName);
+            return Arr::get($model, $transformedName);
         }
     }
 
@@ -257,7 +259,7 @@ abstract class FormField
             $lblClass = $this->getOption('label_attr.class', '');
             $requiredClass = $helper->getConfig('defaults.required_class', 'required');
 
-            if (! str_contains($lblClass, $requiredClass)) {
+            if (! Str::contains($lblClass, $requiredClass)) {
                 $lblClass .= ' '.$requiredClass;
                 $this->setOption('label_attr.class', $lblClass);
             }
@@ -338,7 +340,7 @@ abstract class FormField
      */
     public function getOption($option, $default = null)
     {
-        return array_get($this->options, $option, $default);
+        return Arr::get($this->options, $option, $default);
     }
 
     /**
@@ -363,7 +365,7 @@ abstract class FormField
      */
     public function setOption($name, $value)
     {
-        array_set($this->options, $name, $value);
+        Arr::set($this->options, $name, $value);
 
         return $this;
     }
@@ -500,7 +502,7 @@ abstract class FormField
             $errorClass = $this->formHelper->getConfig('defaults.wrapper_error_class');
             $wrapperClass = $this->getOption('wrapper.class');
 
-            if ($this->getOption('wrapper') && !str_contains($wrapperClass, $errorClass)) {
+            if ($this->getOption('wrapper') && !Str::contains($wrapperClass, $errorClass)) {
                 $wrapperClass .= ' ' . $errorClass;
                 $this->setOption('wrapper.class', $wrapperClass);
             }
@@ -537,13 +539,13 @@ abstract class FormField
         $field_class = $this->formHelper->getConfig('defaults.' . $this->type . '.field_class', '');
 
         $defaults = [];
-        if ($wrapper_class && !array_get($options, 'wrapper.class')) {
+        if ($wrapper_class && !Arr::get($options, 'wrapper.class')) {
             $defaults['wrapper']['class'] = $wrapper_class;
         }
-        if ($label_class && !array_get($options, 'label_attr.class')) {
+        if ($label_class && !Arr::get($options, 'label_attr.class')) {
             $defaults['label_attr']['class'] = $label_class;
         }
-        if ($field_class && !array_get($options, 'attr.class')) {
+        if ($field_class && !Arr::get($options, 'attr.class')) {
             $defaults['attr']['class'] = $field_class;
         }
         return $defaults;
