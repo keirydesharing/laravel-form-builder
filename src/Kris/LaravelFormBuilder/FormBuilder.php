@@ -61,7 +61,7 @@ class FormBuilder
 
         $form->buildForm();
 
-        $this->eventDispatcher->fire(new AfterFormCreation($form));
+        $this->eventDispatcher->dispatch(new AfterFormCreation($form));
 
         return $form;
     }
@@ -101,7 +101,7 @@ class FormBuilder
             ->setValidator($this->container->make('validator'))
             ->setFormOptions($options);
 
-        $this->eventDispatcher->fire(new AfterFormCreation($form));
+        $this->eventDispatcher->dispatch(new AfterFormCreation($form));
 
         return $form;
     }
